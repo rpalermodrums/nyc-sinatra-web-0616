@@ -1,0 +1,18 @@
+<label>Figure Name: </label>
+<%= @figure.name %>
+
+<% unless @titles.empty? %>
+  <% @titles.each do |title| %>
+    <%= title.name %>
+  <% end %>
+<% end %>
+
+<% unless @landmarks.empty? %>
+  <% @landmarks.each do |landmark| %>
+    <%= landmark.name %>
+  <% end %>
+<% end %>
+
+<form action="/figures/<%= @figure.id %>/edit" method="get">
+  <input type="submit" value="Edit Figure">
+</form>
