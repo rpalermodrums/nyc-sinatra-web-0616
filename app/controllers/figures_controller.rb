@@ -7,7 +7,7 @@ class FiguresController < ApplicationController
 
   post '/figures' do
     # binding.pry
-    @figure = Figure.create(params["figure"])
+    @figure = Figure.create(params[:figure])
 
     new_title_and_figure
 
@@ -21,22 +21,22 @@ class FiguresController < ApplicationController
   end
 
   get '/figures/:id' do
-    @figure = Figure.find(params["id"])
+    @figure = Figure.find(params[:id])
     @titles, @landmarks = @figure.titles, @figure.landmarks
 
     erb :'figures/show'
   end
 
   get "/figures/:id/edit" do
-    @figure = Figure.find(params["id"])
+    @figure = Figure.find(params[:id])
     @titles, @landmarks = Title.all, Landmark.all
 
     erb :'figures/edit'
   end
 
   patch "/figures/:id" do
-    @figure = Figure.find(params["id"])
-    @figure.update(name: params[:figure][:name])
+    @figure = Figure.find(params[:id])
+    @figure.update(params[:figure])
 
     new_title_and_figure
 
@@ -46,8 +46,8 @@ class FiguresController < ApplicationController
   private
 
   def new_title_and_figure
-    title = Title.find_or_create_by(name: params[:title][:name])
-    landmark = Landmark.find_or_create_by(name: params[:landmark][:name])
+    title = Title.find_or_create_by(params[:title])
+    landmark = Landmark.find_or_create_by(params[:landmark])
     @figure.titles << title
     @figure.landmarks << landmark
   end
